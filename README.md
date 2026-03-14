@@ -1,6 +1,6 @@
-# MCPFusion & Maestro Tutorials
+# Tutorials
 
-Guides for setting up and using [MCPFusion](https://github.com/PivotLLM/MCPFusion) and [Maestro](https://github.com/PivotLLM/Maestro) — an open-source MCP server and AI orchestration platform.
+This repo is intended to help you get started with our open source software.
 
 ## Guides
 
@@ -8,11 +8,15 @@ Guides for setting up and using [MCPFusion](https://github.com/PivotLLM/MCPFusio
 |-------|-------------|
 | [Getting Started](docs/getting-started.md) | Install and configure MCPFusion, Maestro, and (optionally) PicoClaw with Telegram |
 
-## About
+## Our Software
 
-- **[MCPFusion](https://github.com/PivotLLM/MCPFusion)** — A configuration-driven MCP server that connects AI clients to external APIs and local tools via bearer token authentication. Supports Claude Code, Gemini CLI, and other MCP-compatible clients.
-- **[Maestro](https://github.com/PivotLLM/Maestro)** — A local MCP server providing persistent project management, playbooks, and multi-LLM task orchestration.
-- **[PicoClaw](https://github.com/securityguy/picoclaw)** — An ultra-lightweight AI assistant gateway that bridges messaging platforms (Telegram, Discord, Slack, and others) to AI backends
+- **[MCPFusion](https://github.com/PivotLLM/MCPFusion)** is a configuration-driven MCP server that connects AI clients to external APIs, upstream MCP servers (network and stdio), and local memory tools. Clients only need to connect to one MCP tool to obtain access to all resources the user chooses to configure. It has been tested with Claude Code, Codex, Gemini CLI, and other MCP-compatible clients.
+
+- **[Maestro](https://github.com/PivotLLM/Maestro)** is a local (sdtio) MCP server that provides a methodology and suite of tools to orchestrate projects, enable repeatable processes, and promote continuious improvement. It's fexible design can be used to guide an LLM through a process, and it supports delegating series of tasks to subagents for work and quality control.
+  
+## Third Party Software
+
+- **[PicoClaw](https://github.com/sipeed/picoclaw)** is an ultra-lightweight AI Assistant. We are currently using it to allow access via Telegram and have included instructions to do so in our tutoral.
 
 ## Copyright and license
 
