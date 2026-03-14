@@ -10,9 +10,9 @@ Guides for setting up and using [MCPFusion](https://github.com/PivotLLM/MCPFusio
 
 ## About
 
-- **MCPFusion** — A configuration-driven MCP server that connects AI clients to external APIs and local tools via bearer token authentication. Supports Claude Code, Gemini CLI, and other MCP-compatible clients.
-- **Maestro** — A local MCP server providing persistent project management, playbooks, and multi-LLM task orchestration.
-- **PicoClaw** — An ultra-lightweight AI assistant gateway that bridges messaging platforms (Telegram, Discord, Slack, and others) to AI backends
+- **[MCPFusion](https://github.com/PivotLLM/MCPFusion)** — A configuration-driven MCP server that connects AI clients to external APIs and local tools via bearer token authentication. Supports Claude Code, Gemini CLI, and other MCP-compatible clients.
+- **[Maestro](https://github.com/PivotLLM/Maestro)** — A local MCP server providing persistent project management, playbooks, and multi-LLM task orchestration.
+- **[PicoClaw](https://github.com/securityguy/picoclaw)** — An ultra-lightweight AI assistant gateway that bridges messaging platforms (Telegram, Discord, Slack, and others) to AI backends
 
 ## Copyright and license
 
