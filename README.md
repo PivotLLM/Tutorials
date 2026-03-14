@@ -12,15 +12,15 @@ This repo is intended to help you get started with our open source software.
 
 - **[MCPFusion](https://github.com/PivotLLM/MCPFusion)** is a configuration-driven MCP server that connects AI clients to external APIs, upstream MCP servers (network and stdio), and local memory tools. Clients only need to connect to one MCP tool to obtain access to all resources the user chooses to configure. It has been tested with Claude Code, Codex, Gemini CLI, and other MCP-compatible clients.
 
-- **[Maestro](https://github.com/PivotLLM/Maestro)** is a local (sdtio) MCP server that provides a methodology and suite of tools to orchestrate projects, enable repeatable processes, and promote continuious improvement. It's fexible design can be used to guide an LLM through a process, and it supports delegating series of tasks to subagents for work and quality control.
+- **[Maestro](https://github.com/PivotLLM/Maestro)** is a local (stdio) MCP server that provides a methodology and suite of tools to orchestrate projects, enable repeatable processes, and promote continuous improvement. Its flexible design can be used to guide an LLM through a process, and it supports delegating series of tasks to subagents for work and quality control.
   
 ## Third Party Software
 
-- **[PicoClaw](https://github.com/sipeed/picoclaw)** is an ultra-lightweight AI Assistant. We are currently using it to allow access via Telegram and have included instructions to do so in our tutoral.
+- **[PicoClaw](https://github.com/sipeed/picoclaw)** is an ultra-lightweight AI Assistant. We are currently using it to allow access via Telegram and have included instructions to do so in our tutorial. We maintain a [fork](https://github.com/securityguy/picoclaw) with a number of fixes that we have contributed back to the PicoClaw project as pull requests.
 
 ## Copyright and license
 
-Copyright (c) 2026 by Tenebris Technologies Inc. This contents of this repository are licensed under the MIT License. Please see LICENSE for details.
+Copyright (c) 2026 by Tenebris Technologies Inc. The contents of this repository are licensed under the MIT License. Please see LICENSE for details.
 
 ## Trademarks
 

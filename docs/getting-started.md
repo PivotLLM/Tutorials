@@ -389,7 +389,7 @@ PicoClaw is an ultra-lightweight AI assistant gateway that connects messaging ch
 
 ```bash
 cd ~/source
-git clone https://github.com/securityguy/picoclaw.git
+git clone https://github.com/sipeed/picoclaw.git
 cd picoclaw
 make build
 ```
