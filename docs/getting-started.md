@@ -34,11 +34,11 @@ Please note that MCPFusion is configuration driven and includes configuration fi
 
 ---
 
-## Choosing Your User Account
+## Choosing a User Account
 
-All three components — MCPFusion, Maestro, and PicoClaw — run under the same user account. Running them as separate system users would complicate authentication, since the command-line agents (Claude Code, Codex, Gemini CLI) rely on credentials and configuration stored in the home directory of the user running them.
+In this tutorial, three components — MCPFusion, Maestro, and PicoClaw — run under the same user account. PicoClaw and Maestro execute the command-line agents (Claude Code, Codex, Gemini CLI), and MCPFusion executes Maestro (for stdio MCP), all in the user context. This allows the respective components to find their configurations, data, and in the case of the CLIs, subscription and authentication information.
 
-Throughout this tutorial, `<USER>` represents the Linux username you choose. Wherever you see `<USER>`, substitute your actual username.
+Throughout this tutorial, `<USER>` represents the Linux username you choose. Wherever you see `<USER>`, substitute your actual username. Do *not* include the angle brackets.
 
 ### Recommendations
 
@@ -46,7 +46,7 @@ Throughout this tutorial, `<USER>` represents the Linux username you choose. Whe
 
 **Shared machine:** If you install on a machine used for other purposes, we recommend creating a separate, limited account.
 
-> **Security warning:** AI agents can read and act on the credentials and configuration of the account they run under. This includes environment variables, SSH keys, API tokens, and other files stored in the home directory. An agent that encounters a problem involving a remote system may autonomously attempt to resolve it using any credentials it can find — this is by design, and it is useful, but it means you should think carefully about what the account can access. We strongly recommend a dedicated machine. If you must use a shared machine, create a separate account and ensure it has access only to the information you are comfortable exposing to an agent.
+> **Security warning:** AI agents can read and act on the credentials and configuration of the account they run under. This includes environment variables, SSH keys, API tokens, and other files stored in the home directory. An agent that encounters a problem involving a remote system may autonomously attempt to resolve it using any credentials it can find (for example ssh keys). We strongly recommend a dedicated machine. If you must use a shared machine, create a separate account and ensure it has access only to the information you are comfortable exposing to an agent.
 
 ### Creating a New Account (if needed)
 
