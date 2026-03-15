@@ -16,7 +16,7 @@ This repo is intended to help you get started with our open source software.
   
 ## Third Party Software
 
-- **[PicoClaw](https://github.com/sipeed/picoclaw)** is an ultra-lightweight AI Assistant. We are currently using it to allow access via Telegram and have included instructions to do so in our tutorial. We maintain a [fork](https://github.com/securityguy/picoclaw) with a number of fixes that we have contributed back to the PicoClaw project as pull requests.
+- **[PicoClaw](https://github.com/sipeed/picoclaw)** is an ultra-lightweight AI Assistant. We are currently using it to allow access via Telegram and have included instructions to do so in our tutorial. Our [fork](https://github.com/securityguy/picoclaw) is for testing and development, and we contribute any changes back to the PicoClaw project as pull requests.
 
 ## Copyright and license
 
