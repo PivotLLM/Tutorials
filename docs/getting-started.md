@@ -468,32 +468,29 @@ source ~/.bashrc
 Verify:
 
 ```bash
-picoclaw --version
+picoclaw version
 ```
 
-### 3.4 Create the Configuration Directory
+### 3.4 Initialize PicoClaw
 
 ```bash
-mkdir -p ~/.picoclaw
+picoclaw onboard
 ```
 
 ### 3.5 Configure PicoClaw
 
-Create `~/.picoclaw/config.json` with the following content. Replace the placeholder values with your own:
+Edit `~/.picoclaw/config.json` and update the existing content as follows:
+
+- In `agents` remove `provider` and change `model_name`:
 
 ```json
-{
-  "agents": {
-    "defaults": {
-      "workspace": "~/.picoclaw/workspace",
-      "restrict_to_workspace": true,
-      "model_name": "claude-code",
-      "max_tokens": 32768,
-      "max_tool_iterations": 50,
-      "summarize_message_threshold": 20,
-      "summarize_token_percent": 75
-    }
-  },
+    "model_name": "claude-code",
+```
+
+- In `channels` enable `telegram` substituting your bot token and Telegram user id:
+
+```json
+
   "channels": {
     "telegram": {
       "enabled": true,
@@ -508,6 +505,11 @@ Create `~/.picoclaw/config.json` with the following content. Replace the placeho
       }
     }
   },
+```
+
+- In `model_list` update or add an entry for Claude Code as follows:
+
+```json
   "model_list": [
     {
       "model_name": "claude-code",
@@ -522,7 +524,7 @@ Create `~/.picoclaw/config.json` with the following content. Replace the placeho
 - Replace `YOUR_TELEGRAM_USER_ID` with your numeric Telegram user ID
 - The `model_name: "claude-code"` sentinel tells PicoClaw to use the `claude` CLI without specifying a model, allowing the CLI to use its currently configured model
 
-> **Note on MCP with PicoClaw + Claude CLI:** When PicoClaw uses a CLI backend like Claude Code, it passes MCP tool definitions as text rather than native tool calls. For this reason, it is more efficient to configure the Claude CLI to connect to MCPFusion directly (as done in Part 1) rather than also configuring it as an MCP server inside PicoClaw.
+> **Note on MCP with PicoClaw:** When PicoClaw uses a CLI backend like Claude Code, it is unable to pass MCP tool definitions in their native structured form. As a workaround, PicoClaw passes MCP tool definitions as text. For this reason, when using PicoClaw with a CLI such as Claude Code, Codex, or Gemini CLI, it is must more efficient to configure the CLI(s) to connect to MCPFusion directly (as done in Part 1 above) rather than configuring PicoClaw to use MCPFusion directly. If you choose to use an API such as OpenRouter instead, then you will need to configure PicoClaw to connect directly to MCPFusion so that it can provide tool call services.
 
 ### 3.6 Install the systemd Service
 
