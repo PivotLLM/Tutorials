@@ -266,8 +266,16 @@ claude mcp add --transport http fusion --scope user http://127.0.0.1:8888/mcp --
 
 ### Codex
 
+In theory, codex mcp servers can be managed from the command line with `codex mcp` but specifying a bearer token on the command line is unrealiable. We recommend adding the configuration manually:
+
 ```bash
-codex mcp add --transport http fusion --scope user http://127.0.0.1:8888/mcp --header "Authorization: Bearer YOUR_TOKEN"
+vi ~/.codex/config.toml
+```
+
+```bash
+[mcp_servers.fusion]
+url = "http://127.0.0.1:8888/mcp"
+http_headers = {Authorization="Bearer YOUR_TOKEN"}
 ```
 
 #### Gemini CLI
