@@ -100,7 +100,7 @@ Note: If you have just installed Go for the first time, ensure that it is added 
 
 ## Part 1: Installing MCPFusion
 
-MCPFusion is a configuration-driven MCP (Model Context Protocol) server that connects your AI client to external APIs and local tools via bearer token authentication. It runs as a background service on your machine.
+MCPFusion is a configuration-driven network MCP (Model Context Protocol) server that connects your AI client to external APIs and local tools via bearer token authentication. It runs as a background service on your machine.
 
 ### 1.1 Clone and Build
 
@@ -316,7 +316,7 @@ Your AI assistant can read this documentation and help you write a configuration
 
 ## Part 2: Installing Maestro
 
-Maestro is an MCP server that gives your AI a persistent workspace with three domains: Reference (read-only documentation), Playbooks (reusable procedures), and Projects (active work). It runs as a local stdio process — MCPFusion proxies it to your AI client.
+Maestro is a stdio MCP server that gives your AI assistant a persistent workspace with three domains: Reference (read-only documentation), Playbooks (reusable processes, procedures, and lists), and Projects (active work). It runs as a local stdio process — MCPFusion proxies it to your AI client.
 
 ### 2.1 Clone and Build
 
@@ -357,15 +357,8 @@ It will exit quickly after creating the configuration. Now open the config file:
 vi ~/.maestro/config.json
 ```
 
-The default config includes entries for Claude Code, Codex CLI, and Gemini CLI — all disabled by default. Enable whichever CLI you have installed and update the `command` path to the correct location.
+The default config includes entries for Claude Code, Codex CLI, and Gemini CLI — all disabled by default. Enable whichever CLI(s) you have installed.
 
-**Find the path to your CLI:**
-
-```bash
-which claude    # for Claude Code
-which codex     # for OpenAI Codex
-which gemini    # for Gemini CLI
-```
 
 **Example: enabling Claude Code**
 
@@ -377,7 +370,7 @@ Find the `claude` entry and set `"enabled": true` and the correct command path:
   "display_name": "Claude-CLI",
   "type": "command",
   "stdin": true,
-  "command": "/usr/local/bin/claude",
+  "command": "claude",
   "args": ["-p"],
   "enabled": true
 }
@@ -391,7 +384,7 @@ Find the `claude` entry and set `"enabled": true` and the correct command path:
   "display_name": "Gemini-CLI",
   "type": "command",
   "stdin": true,
-  "command": "/usr/local/bin/gemini",
+  "command": "gemini",
   "args": ["--yolo", "-p", ""],
   "enabled": true
 }
@@ -405,13 +398,16 @@ Find the `claude` entry and set `"enabled": true` and the correct command path:
   "display_name": "Codex-CLI",
   "type": "command",
   "stdin": true,
-  "command": "/usr/local/bin/codex",
+  "command": "codex",
   "args": ["exec", "--skip-git-repo-check"],
   "enabled": true
 }
 ```
+Note that Maestro will search the PATH for the specified `"command"`. If it is not found, you may specific an absolute path. You can also specify additional paths to search at the top level of the configuration file. For example:
 
-Set `"default_llm"` to the `id` of the LLM you want Maestro to use by default (e.g., `"claude"`, `"gpt"`, or `"gemini"`).
+`"extra_path": ["~/.nvm/versions/node/v24.12.0/bin", "~/.local/bin"],`
+
+Next, set `"default_llm"` to the `id` of the LLM you want Maestro to use by default (e.g., `"claude"`, `"gpt"`, or `"gemini"`).
 
 ### 2.4 Verify the Maestro–MCPFusion Connection
 
@@ -422,11 +418,13 @@ sudo systemctl restart mcpfusion
 sudo systemctl status mcpfusion
 ```
 
-In your AI CLI, ask it to list the available Fusion tools. You should see Maestro tools (prefixed with `maestro_`) in the list. You can also ask:
+In your AI CLI, ask it to list available MCP tools. You should see Maestro tools (prefixed with `maestro_`) in the list. You can also ask:
 
 > "Please use the Maestro reference tool to read readme.md and follow the instructions."
 
 This instructs your AI to read Maestro's built-in documentation and orient itself to the available capabilities.
+
+Note: Many AI clients prepend the name of the MCP server or service to the tool name. You may therefore see `fusion_maestro_` plus the tool name.
 
 ---
 
@@ -442,6 +440,8 @@ PicoClaw is an ultra-lightweight AI assistant gateway that connects messaging ch
 2. Send `/newbot` and follow the prompts to create a bot
 3. Copy the **bot token** BotFather gives you (format: `1234567890:ABCDEF...`)
 4. Find your **Telegram user ID** by messaging `@userinfobot`
+
+Note: At the time of writing PicoClaw will support multiple agents, but only one Telegram bot. We intend to submit a PR to enable multiple Telegram bots and route each to a different assistant.
 
 ### 3.2 Clone and Build
 
