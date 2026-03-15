@@ -199,7 +199,7 @@ Now edit the service file to reference this env file:
 sudo vi /etc/systemd/system/mcpfusion.service
 ```
 
-Replace the `Environment=DATA_DIR=...` line with an `EnvironmentFile` directive. The relevant portion of the `[Service]` section should look like this:
+Ensure that the `Environment=DATA_DIR=...` line points to the correct directory. The relevant portion of the `[Service]` section should look like this:
 
 ```ini
 [Service]
@@ -211,12 +211,10 @@ ExecStart=/opt/mcpfusion/mcpfusion
 Restart=always
 RestartSec=5
 
-EnvironmentFile=/opt/mcpfusion/env
+Environment=DATA_DIR=/opt/mcpfusion/
 ```
 
-> **Note:** When you add additional service configurations later (e.g., Microsoft 365, Google Workspace), any API credentials or OAuth client IDs for those services also go into `/opt/mcpfusion/env`.
-
-Enable and start the service:
+Enable and start the service. This will, among other things, initialize the database if it does not already exist:
 
 ```bash
 sudo systemctl daemon-reload
@@ -238,10 +236,12 @@ sudo systemctl stop mcpfusion
 Now generate a token:
 
 ```bash
-/opt/mcpfusion/mcpfusion -token-add "My AI CLI token"
+/opt/mcpfusion/mcpfusion -token-add "AIAgents"
 ```
 
-Copy the token that is printed. **You will not be able to retrieve it again** — store it somewhere safe. You can always generate additional tokens later using the same stop/add/start sequence.
+Copy the token that is displayed. **You will not be able to retrieve it again** — store it somewhere safe. You can always generate additional tokens later using the same stop/add/start sequence.
+
+**Caution:** MCPFusion is designed to be multi-user. Credentials, tokens, and memory items are partitioned by user. This tutorial assumes that you wish all your AI CLIs to access the same MCPFusion context. To do so, use the same token for all of them.
 
 To list existing tokens (shows prefixes only, not full tokens):
 
@@ -264,35 +264,26 @@ sudo systemctl status mcpfusion
 claude mcp add --transport http fusion --scope user http://127.0.0.1:8888/mcp --header "Authorization: Bearer YOUR_TOKEN"
 ```
 
+### Codex
+
+```bash
+codex mcp add --transport http fusion --scope user http://127.0.0.1:8888/mcp --header "Authorization: Bearer YOUR_TOKEN"
+```
+
 #### Gemini CLI
 
 ```bash
 gemini mcp add fusion http://127.0.0.1:8888/mcp --scope user --transport http --header "Authorization: Bearer YOUR_TOKEN"
 ```
 
-Or add it manually to `~/.gemini/settings.json`:
-
-```json
-{
-  "mcpServers": {
-    "fusion": {
-      "url": "http://127.0.0.1:8888/mcp",
-      "type": "http",
-      "headers": {
-        "Authorization": "Bearer YOUR_TOKEN"
-      }
-    }
-  }
-}
-```
-
-Replace `YOUR_TOKEN` with the token generated in step 1.6.
-
 Verify the connection by listing configured MCP servers in your CLI:
 
 ```bash
 # Claude Code
 claude mcp list
+
+# Codex
+codex mcp list
 
 # Gemini CLI
 gemini mcp list
