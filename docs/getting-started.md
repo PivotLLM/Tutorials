@@ -34,6 +34,39 @@ Please note that MCPFusion is configuration driven and includes configuration fi
 
 ---
 
+## Choosing Your User Account
+
+All three components — MCPFusion, Maestro, and PicoClaw — run under the same user account. Running them as separate system users would complicate authentication, since the command-line agents (Claude Code, Codex, Gemini CLI) rely on credentials and configuration stored in the home directory of the user running them.
+
+Throughout this tutorial, `<USER>` represents the Linux username you choose. Wherever you see `<USER>`, substitute your actual username.
+
+### Recommendations
+
+**Dedicated machine (recommended):** The simplest and safest approach is to deploy on a machine dedicated to running these services — a small VM, mini-PC, Raspberry Pi, or a spare computer. Resource requirements are modest. On a dedicated machine, you can simply use your own account.
+
+**Shared machine:** If you install on a machine used for other purposes, we recommend creating a separate, limited account.
+
+> **Security warning:** AI agents can read and act on the credentials and configuration of the account they run under. This includes environment variables, SSH keys, API tokens, and other files stored in the home directory. An agent that encounters a problem involving a remote system may autonomously attempt to resolve it using any credentials it can find — this is by design, and it is useful, but it means you should think carefully about what the account can access. We strongly recommend a dedicated machine. If you must use a shared machine, create a separate account and ensure it has access only to the information you are comfortable exposing to an agent.
+
+### Creating a New Account (if needed)
+
+If you are on a shared machine and want a dedicated account, run the following as an existing user with sudo access:
+
+```bash
+sudo useradd -m -s /bin/bash <USER>
+sudo passwd <USER>
+```
+
+Then log in as `<USER>` (or `su - <USER>`) before proceeding. All subsequent steps must be performed as `<USER>`.
+
+To confirm your current username at any time:
+
+```bash
+whoami
+```
+
+---
+
 ## Prerequisites
 
 Before you begin, ensure the following:
@@ -87,18 +120,10 @@ Create the installation directory and copy the binary:
 sudo mkdir -p /opt/mcpfusion
 sudo cp mcpfusion /opt/mcpfusion/mcpfusion
 sudo chmod 755 /opt/mcpfusion/mcpfusion
+sudo chown -R <USER>:<USER> /opt/mcpfusion
 ```
 
-### 1.3 Create a Dedicated Service User
-
-MCPFusion runs as its own system user for security:
-
-```bash
-sudo useradd --system --no-create-home --shell /sbin/nologin mcpfusion
-sudo chown -R mcpfusion:mcpfusion /opt/mcpfusion
-```
-
-### 1.4 Configure MCPFusion
+### 1.3 Configure MCPFusion
 
 MCPFusion loads one or more JSON configuration files that define which tools it exposes to your AI client. The repository ships with ready-made configurations for many services.
 
@@ -108,7 +133,7 @@ Copy the Maestro configuration (required for Part 2) into the installation direc
 sudo cp ~/source/MCPFusion/configs/maestro.json /opt/mcpfusion/maestro.json
 ```
 
-Open the file and update the `command` path to point to where you will install the Maestro binary. **Use the same path you will install Maestro to in Part 2.** A good choice is `~/bin/maestro` (expanded: `/home/YOUR_USERNAME/bin/maestro`):
+Open the file and update the `command` path to point to where you will install the Maestro binary. **Use the same path you will install Maestro to in Part 2.** A good choice is `~/bin/maestro` (expanded: `/home/<USER>/bin/maestro`):
 
 ```bash
 sudo nano /opt/mcpfusion/maestro.json
@@ -122,16 +147,16 @@ The file should look like this, with the command path updated:
     "maestro": {
       "name": "Maestro",
       "transport": "mcp_stdio",
-      "command": "/home/YOUR_USERNAME/bin/maestro",
+      "command": "/home/<USER>/bin/maestro",
       "toolRefreshInterval": "5m"
     }
   }
 }
 ```
 
-Replace `YOUR_USERNAME` with your actual Linux username.
+Replace `<USER>` with your actual Linux username.
 
-### 1.5 Install the systemd Service
+### 1.4 Install the systemd Service
 
 Copy the service file from the repository and install it:
 
@@ -163,7 +188,7 @@ Set secure permissions on the env file, since it may contain API keys for connec
 
 ```bash
 sudo chmod 640 /opt/mcpfusion/env
-sudo chown mcpfusion:mcpfusion /opt/mcpfusion/env
+sudo chown <USER>:<USER> /opt/mcpfusion/env
 ```
 
 Now edit the service file to reference this env file:
@@ -177,8 +202,8 @@ Replace the `Environment=DATA_DIR=...` line with an `EnvironmentFile` directive.
 ```ini
 [Service]
 Type=simple
-User=mcpfusion
-Group=mcpfusion
+User=<USER>
+Group=<USER>
 WorkingDirectory=/opt/mcpfusion
 ExecStart=/opt/mcpfusion/mcpfusion
 Restart=always
@@ -200,7 +225,7 @@ sudo systemctl status mcpfusion
 
 You should see `active (running)` in the status output.
 
-### 1.6 Create an API Token
+### 1.5 Create an API Token
 
 MCPFusion uses bearer tokens to authenticate clients. Token management commands read and write the same embedded database that the running service uses, so **you must stop MCPFusion before running them** to avoid database locking errors.
 
@@ -211,7 +236,7 @@ sudo systemctl stop mcpfusion
 Now generate a token:
 
 ```bash
-sudo -u mcpfusion /opt/mcpfusion/mcpfusion -token-add "My AI CLI token"
+/opt/mcpfusion/mcpfusion -token-add "My AI CLI token"
 ```
 
 Copy the token that is printed. **You will not be able to retrieve it again** — store it somewhere safe. You can always generate additional tokens later using the same stop/add/start sequence.
@@ -219,7 +244,7 @@ Copy the token that is printed. **You will not be able to retrieve it again** �
 To list existing tokens (shows prefixes only, not full tokens):
 
 ```bash
-sudo -u mcpfusion /opt/mcpfusion/mcpfusion -token-list
+/opt/mcpfusion/mcpfusion -token-list
 ```
 
 Start MCPFusion again when you are done:
@@ -229,7 +254,7 @@ sudo systemctl start mcpfusion
 sudo systemctl status mcpfusion
 ```
 
-### 1.7 Connect Your AI CLI to MCPFusion
+### 1.6 Connect Your AI CLI to MCPFusion
 
 #### Claude Code
 
@@ -271,7 +296,7 @@ claude mcp list
 gemini mcp list
 ```
 
-### 1.8 Optional: Connect Additional Services
+### 1.7 Optional: Connect Additional Services
 
 MCPFusion ships with ready-made configuration files for many popular services. Copy any of the following from `~/source/MCPFusion/configs/` to `/opt/mcpfusion/`, then add them to `MCP_FUSION_CONFIGS` in the service file and restart:
 
@@ -303,7 +328,7 @@ go build -o maestro .
 
 ### 2.2 Install the Binary
 
-Install to the same path you configured in the MCPFusion `maestro.json` (step 1.4):
+Install to the same path you configured in the MCPFusion `maestro.json` (step 1.3):
 
 ```bash
 mkdir -p ~/bin
@@ -506,7 +531,7 @@ Create a service file:
 sudo nano /etc/systemd/system/picoclaw.service
 ```
 
-Paste the following, replacing `YOUR_USERNAME` with your Linux username:
+Paste the following, replacing `<USER>` with your Linux username:
 
 ```ini
 [Unit]
@@ -515,9 +540,9 @@ After=network.target
 
 [Service]
 Type=simple
-User=YOUR_USERNAME
-WorkingDirectory=/home/YOUR_USERNAME
-ExecStart=/home/YOUR_USERNAME/.local/bin/picoclaw gateway
+User=<USER>
+WorkingDirectory=/home/<USER>
+ExecStart=/home/<USER>/.local/bin/picoclaw gateway
 Restart=always
 RestartSec=5
 
@@ -567,7 +592,7 @@ sudo journalctl -u mcpfusion -f
 **Common issues:**
 
 - *Service fails to start* — check the journal for startup errors; the most common cause is a malformed JSON config file or a missing path in `maestro.json`
-- *401 Unauthorized from your CLI* — the bearer token in your CLI configuration does not match any token in MCPFusion's database; regenerate using the stop/add/start sequence in step 1.6
+- *401 Unauthorized from your CLI* — the bearer token in your CLI configuration does not match any token in MCPFusion's database; regenerate using the stop/add/start sequence in step 1.5
 - *Maestro tools not appearing* — verify the `command` path in `maestro.json` points to the correct Maestro binary and that the binary is executable; check the log for stdio launch errors
 - *Database lock error when adding a token* — the service is still running; stop it first with `sudo systemctl stop mcpfusion` before running token management commands
 
@@ -624,7 +649,7 @@ sudo journalctl -u picoclaw -f
 **Common issues:**
 
 - *Bot does not respond* — verify the Telegram token is correct and that your user ID is listed in `allow_from`
-- *Claude Code not found* — ensure the `claude` binary is in the PATH of the user running the service; you can test this by running `su -s /bin/bash YOUR_USERNAME -c "which claude"`
+- *Claude Code not found* — ensure the `claude` binary is in the PATH of the user running the service; you can test this by running `su -s /bin/bash <USER> -c "which claude"`
 
 ---
 
@@ -656,9 +681,9 @@ sudo systemctl restart mcpfusion
 
 # Add a new MCPFusion token (must stop service first)
 sudo systemctl stop mcpfusion
-sudo -u mcpfusion /opt/mcpfusion/mcpfusion -token-add "Description"
+/opt/mcpfusion/mcpfusion -token-add "Description"
 sudo systemctl start mcpfusion
 
 # List MCPFusion tokens
-sudo -u mcpfusion /opt/mcpfusion/mcpfusion -token-list
+/opt/mcpfusion/mcpfusion -token-list
 ```
