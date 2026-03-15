@@ -4,9 +4,7 @@ This repo is intended to help you get started with our open source software.
 
 ## Guides
 
-| Guide | Description |
-|-------|-------------|
-| [Getting Started](docs/getting-started.md) | Install and configure MCPFusion, Maestro, and (optionally) PicoClaw with Telegram |
+- **[Getting Started](docs/getting-started.md)** — Install and configure MCPFusion, Maestro, and (optionally) PicoClaw with Telegram
 
 ## Our Software
 
