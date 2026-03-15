@@ -14,7 +14,7 @@ Use of this tutorial is permitted only if you accept the accompanying License, d
 
 - While it is possible to constrain the agents to specific directories, and place other security controls in place, we suggest deploying this combination of software on a Linux system that does not contain other sensitive data. Assuming you wish your AI agents to continue working for you in the background, it doesn't make sense to install them on your laptop. A small VM, mini-PC, Raspberry Pi, or an old computer you hae laying around should all work fine.
 
-- It is generally a good practice to run services as their own user. However, this can complicate the use of command-line agents connected to a subscription, and both Maestro and PicoClaw default to creating their workspace in the user's home directory. This tutorial therefore assumes that you wish to install all software such that it runs under the same account.
+- This tutorial assumes that your prefered command-line text editor is vi. Feel free to substitute your editor of choice.
 
 ## Introduction and Background
 
@@ -73,9 +73,9 @@ Before you begin, ensure the following:
 
 - **Operating system**: Linux with `sudo` access
 - **Source directory**: These instructions assume you keep source code in `~/source`. If you prefer a different location, adjust all paths accordingly.
-- **AI CLI installed and authenticated**: You must have at least one of the following installed and signed in to your account:
+- **AI CLI installed and authenticated**: You must have at least one of the following installed, working, and signed in to your account:
   - [Claude Code](https://claude.ai/code) (`claude`)
-  - [OpenAI Codex CLI](https://github.com/openai/codex) (`codex`)
+  - [OpenAI Codex](https://github.com/openai/codex) (`codex`)
   - [Google Gemini CLI](https://github.com/google-gemini/gemini-cli) (`gemini`)
 
 ### Go Compiler
@@ -94,6 +94,8 @@ You should see output like `go version go1.26.1 linux/amd64`.
 
 We recommend using the latest version of Go. Earlier versions may work but have not been tested.
 
+Note: If you have just installed Go for the first time, ensure that it is added to your path. After doing so, you will likely need to log out or restart your terminal session for the update PATH to take effect.
+
 ---
 
 ## Part 1: Installing MCPFusion
@@ -110,7 +112,7 @@ cd MCPFusion
 go build -o mcpfusion .
 ```
 
-If the build succeeds, you will have a `mcpfusion` binary in the current directory.
+WHen the build succeeds, you will have a `mcpfusion` binary in the current directory.
 
 ### 1.2 Install the Binary
 
@@ -125,7 +127,7 @@ sudo chown -R <USER>:<USER> /opt/mcpfusion
 
 ### 1.3 Configure MCPFusion
 
-MCPFusion loads one or more JSON configuration files that define which tools it exposes to your AI client. The repository ships with ready-made configurations for many services.
+MCPFusion loads one or more JSON configuration files that define which tools it exposes to your AI client. The repository ships with ready-made configurations for several services.
 
 Copy the Maestro configuration (required for Part 2) into the installation directory:
 
@@ -136,7 +138,7 @@ sudo cp ~/source/MCPFusion/configs/maestro.json /opt/mcpfusion/maestro.json
 Open the file and update the `command` path to point to where you will install the Maestro binary. **Use the same path you will install Maestro to in Part 2.** A good choice is `~/bin/maestro` (expanded: `/home/<USER>/bin/maestro`):
 
 ```bash
-sudo nano /opt/mcpfusion/maestro.json
+sudo vi /opt/mcpfusion/maestro.json
 ```
 
 The file should look like this, with the command path updated:
@@ -167,7 +169,7 @@ sudo cp ~/source/MCPFusion/mcpfusion.service /etc/systemd/system/mcpfusion.servi
 MCPFusion reads its environment variables from a file at `/opt/mcpfusion/env`. Create it now:
 
 ```bash
-sudo nano /opt/mcpfusion/env
+sudo vi /opt/mcpfusion/env
 ```
 
 Add the following content. Configuration file paths are relative to the working directory (`/opt/mcpfusion`):
@@ -194,7 +196,7 @@ sudo chown <USER>:<USER> /opt/mcpfusion/env
 Now edit the service file to reference this env file:
 
 ```bash
-sudo nano /etc/systemd/system/mcpfusion.service
+sudo vi /etc/systemd/system/mcpfusion.service
 ```
 
 Replace the `Environment=DATA_DIR=...` line with an `EnvironmentFile` directive. The relevant portion of the `[Service]` section should look like this:
@@ -353,7 +355,7 @@ On first run, Maestro automatically creates a default configuration at `~/.maest
 It will exit quickly after creating the configuration. Now open the config file:
 
 ```bash
-nano ~/.maestro/config.json
+vi ~/.maestro/config.json
 ```
 
 The default config includes entries for Claude Code, Codex CLI, and Gemini CLI — all disabled by default. Enable whichever CLI you have installed and update the `command` path to the correct location.
@@ -528,7 +530,7 @@ Create `~/.picoclaw/config.json` with the following content. Replace the placeho
 Create a service file:
 
 ```bash
-sudo nano /etc/systemd/system/picoclaw.service
+sudo vi /etc/systemd/system/picoclaw.service
 ```
 
 Paste the following, replacing `<USER>` with your Linux username:
