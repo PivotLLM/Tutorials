@@ -1,8 +1,8 @@
 # Getting Started with MCPFusion, Maestro, and PicoClaw
 
-**This is the first draft of this tutorial. Please do not hesitate to open an issue or create a PR.**
+This is the first draft of this tutorial. Please do not hesitate to open an issue or create a PR.
 
-**Use of this tutorial is permitted only if you accept the accompanying License, disclaimer, and legal notices; otherwise, you must not use, copy, or rely on it.**
+Use of this tutorial is permitted only if you accept the accompanying License, disclaimer, and legal notices; otherwise, you must not use, copy, or rely on it.
 
 ## Important Notes
 
