@@ -1,6 +1,36 @@
-# Getting Started with MCPFusion and Maestro
+# Getting Started with MCPFusion, Maestro, and PicoClaw
 
-This tutorial walks you through setting up MCPFusion and Maestro — a powerful combination that gives your AI assistant persistent knowledge management, project orchestration, and access to external APIs.
+**This is the first draft of this tutorial. Please do not hesitate to open an issue or create a PR.**
+
+**Use of this tutorial is permitted only if you accept the accompanying License, disclaimer, and legal notices; otherwise, you must not use, copy, or rely on it.**
+
+## Important Notes
+
+- Please review the copyright, disclaimer, and other legal information in README.md and that accompanies all software referenced in it. This tutorial is provided for geneneral educatonal purposes. It is up to you to ensure that your use of the software is consistent with your security requirements and risk tolerance.
+
+- The software in this tutorial can be used by virtually any AI client that supports the MCP standard. However, the author has found it far more efficient and cost effective to use command-line agents (Claude Code, Codex, and Gemini CLI) connected to a subscription instead of a pay-as-you-go API. This tutorial assumes that you have at least one of the above CLIs installed, configured, and connected to a subscription that is appropriate for your tasks.
+
+- The software is written in Go and has been tested on Linux and macOS. While this tutorial assumes Linux, it will work on macOS with the exception of the .service files intended to automatically start the componets at boot.
+
+- While it is possible to constrain the agents to specific directories, and place other security controls in place, we suggest deploying this combination of software on a Linux system that does not contain other sensitive data. Assuming you wish your AI agents to continue working for you in the background, it doesn't make sense to install them on your laptop. A small VM, mini-PC, Raspberry Pi, or an old computer you hae laying around should all work fine.
+
+- It is generally a good practice to run services as their own user. However, this can complicate the use of command-line agents connected to a subscription, and both Maestro and PicoClaw default to creating their workspace in the user's home directory. This tutorial therefore assumes that you wish to install all software such that it runs under the same account.
+
+## Introduction and Background
+
+This tutorial walks you through setting up MCPFusion and Maestro, a powerful combination that gives your AI assistant persistent knowledge management, project orchestration, and access to external APIs. The author uses MCPFuion with a variety of desktop and CLI AI clients, including Claude Code, Claude Desktop, Codex, Gemini CLI, and PicoClaw.
+
+**MCPFusion** will become your connectivity hub. Your AI client(s) only need to connect to MCPFusion. It, in turn, can provide access to a multitude of APIs and consolidate access to other MCP searvers. This is particularly useful if you use more than one client. This tutorial assumes a single user environment. However, MCPFusion is designed for multiple users, and if desirable, this capability could be used to provide different access to different AI clients.
+
+**Maestro** is a sophisticated orchestration tool that enables AI agents to perform complex tasks with an emphasis on delegation, reliable completion, repeatable proccesses, continuious improement, and quality assurance. When instructed to delegate work to a worker (sub-agent), Maestro uses command-line agents such as Claude Code, Codex, and Gemini CLI to execute non-interactive tasks. 
+
+**PicoClaw** is a rapidly evolving lightweight AI client with many features. This tutorial only scratches the surface of its capabilities by using it to connect a Telegram bot to a Claude-code backed agent. In this configuration it is more efficient to connect Claude Code to MCPFusion. However, PicoClaw is capable of connecting directly to MCPFusion.
+
+Assuming you install and configure all three components, and assuming you use Claude Code, the system will look like this:
+
+[Telegram Bot] <-> [PicoClaw] <-> [Claude Code] <-> [MCPFusion] <-> [Maestro]
+
+Please note that MCPFusion is configuration driven and includes configuration files to faciliate connectivity to Google Search, Google Workspace, Micorosft 365, Trello, and others. Should you wish to connect to other APIs, detailed AI-friendly documentation is included. Most of the supplied JSON configuration files were written primarily by Claude Code.
 
 ---
 
@@ -17,7 +47,7 @@ Before you begin, ensure the following:
 
 ### Go Compiler
 
-Both MCPFusion and Maestro are written in Go and must be compiled from source. If you do not have Go installed, visit the official installation page:
+All three programs are written in Go and we strongly recommend compiling the from source. If you do not have Go installed, please visit the official installation page:
 
 **https://go.dev/doc/install**
 
@@ -27,7 +57,9 @@ Follow the instructions for Linux. After installation, verify it works:
 go version
 ```
 
-You should see output like `go version go1.23.0 linux/amd64`. Any version 1.21 or later should work.
+You should see output like `go version go1.26.1 linux/amd64`.
+
+We recommend using the latest version of Go. Earlier versions may work but have not been tested.
 
 ---
 
