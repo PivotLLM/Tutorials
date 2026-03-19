@@ -4,6 +4,8 @@ This is the first draft of this tutorial. Please do not hesitate to open an issu
 
 Use of this tutorial is permitted only if you accept the accompanying License, disclaimer, and legal notices; otherwise, you must not use, copy, or rely on it.
 
+**WARNING: We have identified several bugs in PicoClaw with the potential to impact those using Claude Code, Codex, and Gemini CLI. For example, improper parsing of the returned JSON causes some tool calls intended for PicoClaw to be ignored and forwarded to the user as a message. These tool calls are used for scheduling, engaging sub-agents, etc. If your use case includes this functionality, you may wish to clone from https://github.com/securityguy/picoclaw until the PicoClaw project is able to address the large volume of PRs and address these issues.**
+
 ## Important Notes
 
 - Please review the copyright, disclaimer, and other legal information in README.md and that accompanies all software referenced in it. This tutorial is provided for geneneral educatonal purposes. It is up to you to ensure that your use of the software is consistent with your security requirements and risk tolerance.

@@ -16,6 +16,8 @@ This repo is intended to help you get started with our open source software.
 
 - **[PicoClaw](https://github.com/sipeed/picoclaw)** is an ultra-lightweight AI Assistant. We are currently using it to allow access via Telegram and have included instructions to do so in our tutorial. Our [fork](https://github.com/securityguy/picoclaw) is for testing and development, and we contribute any changes back to the PicoClaw project as pull requests.
 
+**WARNING: We have identified several bugs in PicoClaw with the potential to impact those using Claude Code, Codex, and Gemini CLI. For example, improper parsing of the returned JSON causes some tool calls intended for PicoClaw to be ignored and forwarded to the user as a message. These tool calls are used for scheduling, engaging sub-agents, etc. If your use case includes this functionality, you may wish to clone from https://github.com/securityguy/picoclaw until the PicoClaw project is able to address the large volume of PRs and address these issues.**
+
 ## Copyright and license
 
 Copyright (c) 2026 by Tenebris Technologies Inc. The contents of this repository are licensed under the MIT License. Please see LICENSE for details.
