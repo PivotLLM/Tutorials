@@ -1,10 +1,10 @@
-# Getting Started with MCPFusion, Maestro, and PicoClaw
+# Getting Started with MCPFusion, Maestro, and ????Claw
 
 This is the first draft of this tutorial. Please do not hesitate to open an issue or create a PR.
 
 Use of this tutorial is permitted only if you accept the accompanying License, disclaimer, and legal notices; otherwise, you must not use, copy, or rely on it.
 
-**WARNING: We have identified several bugs in PicoClaw with the potential to impact those using Claude Code, Codex, and Gemini CLI. For example, improper parsing of the returned JSON causes some tool calls intended for PicoClaw to be ignored and forwarded to the user as a message. These tool calls are used for scheduling, engaging sub-agents, etc. If your use case includes this functionality, you may wish to clone from https://github.com/securityguy/picoclaw until the PicoClaw project is able to address the large volume of PRs and address these issues.**
+**WARNING: We have identified several bugs in PicoClaw with the potential to impact those using Claude Code, Codex, and Gemini CLI. We will be updating this shortly - for now, please focus on MCPFusion and Maestro**
 
 ## Important Notes
 
@@ -26,11 +26,11 @@ This tutorial walks you through setting up MCPFusion and Maestro, a powerful com
 
 **Maestro** is a sophisticated orchestration tool that enables AI agents to perform complex tasks with an emphasis on delegation, reliable completion, repeatable proccesses, continuious improement, and quality assurance. When instructed to delegate work to a worker (sub-agent), Maestro uses command-line agents such as Claude Code, Codex, and Gemini CLI to execute non-interactive tasks. 
 
-**PicoClaw** is a rapidly evolving lightweight AI client with many features. This tutorial only scratches the surface of its capabilities by using it to connect a Telegram bot to a Claude-code backed agent. In this configuration it is more efficient to connect Claude Code to MCPFusion. However, PicoClaw is capable of connecting directly to MCPFusion.
+**<TBD>Claw** is a rapidly evolving lightweight AI client with many features. This tutorial only scratches the surface of its capabilities by using it to connect a Telegram bot to a Claude-code backed agent. In this configuration it is more efficient to connect Claude Code to MCPFusion. However, PicoClaw is capable of connecting directly to MCPFusion.
 
 Assuming you install and configure all three components, and assuming you use Claude Code, the system will look like this:
 
-[Telegram Bot] <-> [PicoClaw] <-> [Claude Code] <-> [MCPFusion] <-> [Maestro]
+[Telegram Bot] <-> [<TBD>Claw] <-> [Claude Code] <-> [MCPFusion] <-> [Maestro]
 
 Please note that MCPFusion is configuration driven and includes configuration files to faciliate connectivity to Google Search, Google Workspace, Micorosft 365, Trello, and others. Should you wish to connect to other APIs, detailed AI-friendly documentation is included. Most of the supplied JSON configuration files were written primarily by Claude Code.
 
