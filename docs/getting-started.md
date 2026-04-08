@@ -24,13 +24,13 @@ This tutorial walks you through setting up MCPFusion and Maestro, a powerful com
 
 **Maestro** is a sophisticated orchestration tool that enables AI agents to perform complex tasks with an emphasis on delegation, reliable completion, repeatable proccesses, continuious improement, and quality assurance. When instructed to delegate work to a worker (sub-agent), Maestro uses command-line agents such as Claude Code, Codex, and Gemini CLI to execute non-interactive tasks. 
 
-**ClawEh** is a rapidly evolving lightweight AI client with many features. This tutorial only scratches the surface of its capabilities by using it to connect a Telegram bot to a Claude-code backed agent. In this configuration it is more efficient to connect Claude Code to MCPFusion. However, ClawEh is capable of connecting directly to MCPFusion.
+**ClawEh** is a lightweight AI client focused on core stability and security. This tutorial only scratches the surface of its capabilities by using it to connect a Telegram bot to a Claude-code backed AI assistant. In this configuration, it is more efficient to connect Claude Code to MCPFusion. However, ClawEh can connect directly to MCP servers (including MCPFusion).
 
 Assuming you install and configure all three components, and assuming you use Claude Code, the system will look like this:
 
 [Telegram Bot] <-> [ClawEh] <-> [Claude Code] <-> [MCPFusion] <-> [Maestro]
 
-Please note that MCPFusion is configuration driven and includes configuration files to faciliate connectivity to Google Search, Google Workspace, Micorosft 365, Trello, and others. Should you wish to connect to other APIs, detailed AI-friendly documentation is included. Most of the supplied JSON configuration files were written primarily by Claude Code.
+Please note that MCPFusion is configuration-driven and includes configuration files to facilitate connectivity to Google Search, Google Workspace, Microsoft 365, Trello, and others. Should you wish to connect to other APIs, detailed AI-friendly documentation is included. Most of the supplied JSON configuration files were written primarily by Claude Code.
 
 ---
 
