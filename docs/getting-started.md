@@ -1,10 +1,8 @@
-# Getting Started with MCPFusion, Maestro, and ????Claw
+# Getting Started with MCPFusion, Maestro, and ClawEh
 
 This is the first draft of this tutorial. Please do not hesitate to open an issue or create a PR.
 
 Use of this tutorial is permitted only if you accept the accompanying License, disclaimer, and legal notices; otherwise, you must not use, copy, or rely on it.
-
-**WARNING: We have identified several bugs in PicoClaw with the potential to impact those using Claude Code, Codex, and Gemini CLI. We will be updating this shortly - for now, please focus on MCPFusion and Maestro**
 
 ## Important Notes
 
@@ -20,17 +18,17 @@ Use of this tutorial is permitted only if you accept the accompanying License, d
 
 ## Introduction and Background
 
-This tutorial walks you through setting up MCPFusion and Maestro, a powerful combination that gives your AI assistant persistent knowledge management, project orchestration, and access to external APIs. The author uses MCPFuion with a variety of desktop and CLI AI clients, including Claude Code, Claude Desktop, Codex, Gemini CLI, and PicoClaw.
+This tutorial walks you through setting up MCPFusion and Maestro, a powerful combination that gives your AI assistant persistent knowledge management, project orchestration, and access to external APIs. The author uses MCPFuion with a variety of desktop and CLI AI clients, including Claude Code, Claude Desktop, Codex, Gemini CLI, and ClawEh.
 
 **MCPFusion** will become your connectivity hub. Your AI client(s) only need to connect to MCPFusion. It, in turn, can provide access to a multitude of APIs and consolidate access to other MCP searvers. This is particularly useful if you use more than one client. This tutorial assumes a single user environment. However, MCPFusion is designed for multiple users, and if desirable, this capability could be used to provide different access to different AI clients.
 
 **Maestro** is a sophisticated orchestration tool that enables AI agents to perform complex tasks with an emphasis on delegation, reliable completion, repeatable proccesses, continuious improement, and quality assurance. When instructed to delegate work to a worker (sub-agent), Maestro uses command-line agents such as Claude Code, Codex, and Gemini CLI to execute non-interactive tasks. 
 
-**<TBD>Claw** is a rapidly evolving lightweight AI client with many features. This tutorial only scratches the surface of its capabilities by using it to connect a Telegram bot to a Claude-code backed agent. In this configuration it is more efficient to connect Claude Code to MCPFusion. However, PicoClaw is capable of connecting directly to MCPFusion.
+**ClawEh** is a rapidly evolving lightweight AI client with many features. This tutorial only scratches the surface of its capabilities by using it to connect a Telegram bot to a Claude-code backed agent. In this configuration it is more efficient to connect Claude Code to MCPFusion. However, ClawEh is capable of connecting directly to MCPFusion.
 
 Assuming you install and configure all three components, and assuming you use Claude Code, the system will look like this:
 
-[Telegram Bot] <-> [<TBD>Claw] <-> [Claude Code] <-> [MCPFusion] <-> [Maestro]
+[Telegram Bot] <-> [ClawEh] <-> [Claude Code] <-> [MCPFusion] <-> [Maestro]
 
 Please note that MCPFusion is configuration driven and includes configuration files to faciliate connectivity to Google Search, Google Workspace, Micorosft 365, Trello, and others. Should you wish to connect to other APIs, detailed AI-friendly documentation is included. Most of the supplied JSON configuration files were written primarily by Claude Code.
 
@@ -38,7 +36,7 @@ Please note that MCPFusion is configuration driven and includes configuration fi
 
 ## Choosing a User Account
 
-In this tutorial, three components — MCPFusion, Maestro, and PicoClaw — run under the same user account. PicoClaw and Maestro execute the command-line agents (Claude Code, Codex, Gemini CLI), and MCPFusion executes Maestro (for stdio MCP), all in the user context. This allows the respective components to find their configurations, data, and in the case of the CLIs, subscription and authentication information.
+In this tutorial, three components — MCPFusion, Maestro, and ClawEh — run under the same user account. ClawEh and Maestro execute the command-line agents (Claude Code, Codex, Gemini CLI), and MCPFusion executes Maestro (for stdio MCP), all in the user context. This allows the respective components to find their configurations, data, and in the case of the CLIs, subscription and authentication information.
 
 Throughout this tutorial, `<USER>` represents the Linux username you choose. Wherever you see `<USER>`, substitute your actual username. Do *not* include the angle brackets.
 
@@ -79,6 +77,8 @@ Before you begin, ensure the following:
   - [Claude Code](https://claude.ai/code) (`claude`)
   - [OpenAI Codex](https://github.com/openai/codex) (`codex`)
   - [Google Gemini CLI](https://github.com/google-gemini/gemini-cli) (`gemini`)
+
+**Note:** Maestro, the orchtestration engine, spawns AI CLIs to take advanage of their agentic nature and avoid having to deal with multiple API calls, handling tool calling, etc. The CLIs all have MCP capability and fine-grained permission settings (for those who wish to use them) so it makes more sense for Maestro to start a CLI and allow it to run in the background until it is finished. If you do not with to use a CLI, an alternate approach would be to instruct your AI assistants to use ClawEh's spawn tool.
 
 ### Go Compiler
 
@@ -430,11 +430,9 @@ Note: Many AI clients prepend the name of the MCP server or service to the tool 
 
 ---
 
-## Part 3 (Optional): Installing PicoClaw with Telegram
+## Part 3 (Optional): Installing ClawEh with Telegram
 
-> **Note:** At the time of writing, PicoClaw's Claude CLI integration is the primary tested configuration. Only Claude Code is covered in this section. Support for Codex and Gemini CLIs may be available — check the PicoClaw repository for the latest status.
-
-PicoClaw is an ultra-lightweight AI assistant gateway that connects messaging channels (Telegram, Discord, Slack, and many others) to AI backends. This section shows how to set it up with Telegram and Claude Code.
+ClawEh is a lightweight AI assistant gateway that connects messaging channels (Telegram, Slack, and others) to AI backends. This section shows how to set it up with Telegram and Claude Code in **unified mode** — the recommended starting point for a personal assistant.
 
 ### 3.1 Prerequisites: Create a Telegram Bot
 
@@ -443,24 +441,24 @@ PicoClaw is an ultra-lightweight AI assistant gateway that connects messaging ch
 3. Copy the **bot token** BotFather gives you (format: `1234567890:ABCDEF...`)
 4. Find your **Telegram user ID** by messaging `@userinfobot`
 
-Note: At the time of writing PicoClaw will support multiple agents, but only one Telegram bot. We intend to submit a PR to enable multiple Telegram bots and route each to a different assistant.
-
 ### 3.2 Clone and Build
 
 ```bash
 cd ~/source
-git clone https://github.com/sipeed/picoclaw.git
-cd picoclaw
-make build
+git clone https://github.com/PivotLLM/ClawEh.git
+cd ClawEh
+go build -o claw ./cmd/claw
 ```
 
 ### 3.3 Install the Binary
 
 ```bash
-make install
+mkdir -p ~/.local/bin
+cp claw ~/.local/bin/claw
+chmod 755 ~/.local/bin/claw
 ```
 
-This installs the `picoclaw` binary to `~/.local/bin/picoclaw`. Ensure `~/.local/bin` is in your `PATH`:
+Ensure `~/.local/bin` is in your `PATH`:
 
 ```bash
 echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
@@ -470,48 +468,81 @@ source ~/.bashrc
 Verify:
 
 ```bash
-picoclaw version
+claw version
 ```
 
-### 3.4 Initialize PicoClaw
+### 3.4 Initialize ClawEh
 
 ```bash
-picoclaw onboard
+claw onboard
 ```
 
-### 3.5 Configure PicoClaw
+This creates a default configuration at `~/.claw/config.json`.
 
-Edit `~/.picoclaw/config.json` and update the existing content as follows:
+### 3.5 Understanding Unified Mode
 
-- In `agents` remove `provider` and change `model_name`:
+Before editing the configuration, it is worth understanding **unified mode**, which is what this tutorial configures.
+
+ClawEh supports several session modes that control how your assistant's memory is divided:
+
+| Mode | Each person gets... |
+|---|---|
+| `unified` | One shared memory for the entire agent, across all users and channels |
+| `per-user` | Their own private memory |
+| `per-platform` | A separate memory per platform (Telegram vs Slack, etc.) |
+
+**Unified mode** means there is one Alice. All conversations — regardless of who sends them or through which channel — contribute to and draw from the same accumulated context. Alice remembers what she learned from your morning Telegram message when you follow up that evening from Slack. She does not maintain separate conversations per person or per channel; she is one coherent assistant with one continuous memory.
+
+This is the right choice when:
+- You are the only user (or all users are fully trusted and you *want* them to share context)
+- You want the assistant to be a consistent identity — one Alice, with one accumulated knowledge base
+
+If you want each person to have a private, independent relationship with the assistant, use `per-user` instead.
+
+> **Security note:** In unified mode, every user who can reach the assistant shares the same memory. Only grant access to people you trust completely by listing their IDs in `allow_from`. An empty `allow_from` list means nobody can connect.
+
+### 3.6 Configure ClawEh
+
+Edit `~/.claw/config.json`. Replace its contents with the following, substituting your values where indicated:
 
 ```json
-    "model_name": "claude-code",
-```
-
-- In `channels` enable `telegram` substituting your bot token and Telegram user id:
-
-```json
-
-  "channels": {
-    "telegram": {
-      "enabled": true,
-      "token": "YOUR_TELEGRAM_BOT_TOKEN",
-      "allow_from": ["YOUR_TELEGRAM_USER_ID"],
-      "typing": {
-        "enabled": true
-      },
-      "placeholder": {
-        "enabled": true,
-        "text": "Thinking..."
-      }
-    }
+{
+  "session": {
+    "mode": "unified"
   },
-```
-
-- In `model_list` update or add an entry for Claude Code as follows:
-
-```json
+  "agents": {
+    "defaults": {
+      "model": "claude-code",
+      "request_timeout": 900,
+      "max_tool_iterations": 50,
+      "summarize_message_threshold": 20,
+      "summarize_token_percent": 75
+    },
+    "list": [
+      {
+        "id": "alice",
+        "name": "Alice",
+        "default": true
+      }
+    ]
+  },
+  "channels": {
+    "telegram": [
+      {
+        "id": "alice",
+        "enabled": true,
+        "token": "YOUR_TELEGRAM_BOT_TOKEN",
+        "allow_from": ["YOUR_TELEGRAM_USER_ID"],
+        "typing": {
+          "enabled": true
+        },
+        "placeholder": {
+          "enabled": true,
+          "text": "Thinking..."
+        }
+      }
+    ]
+  },
   "model_list": [
     {
       "model_name": "claude-code",
@@ -524,53 +555,56 @@ Edit `~/.picoclaw/config.json` and update the existing content as follows:
 
 - Replace `YOUR_TELEGRAM_BOT_TOKEN` with the token from BotFather
 - Replace `YOUR_TELEGRAM_USER_ID` with your numeric Telegram user ID
-- The `model_name: "claude-code"` sentinel tells PicoClaw to use the `claude` CLI without specifying a model, allowing the CLI to use its currently configured model
+- The `claude-cli/claude-code` model string tells ClawEh to use the `claude` CLI without specifying a model, so the CLI uses whichever model is currently configured in your Claude Code subscription
+- The agent is named `alice` — you can change this to any name you like; it becomes part of the internal channel name (`telegram-alice`)
 
-> **Note on MCP with PicoClaw:** When PicoClaw uses a CLI backend like Claude Code, it is unable to pass MCP tool definitions in their native structured form. As a workaround, PicoClaw passes MCP tool definitions as text. For this reason, when using PicoClaw with a CLI such as Claude Code, Codex, or Gemini CLI, it is must more efficient to configure the CLI(s) to connect to MCPFusion directly (as done in Part 1 above) rather than configuring PicoClaw to use MCPFusion directly. If you choose to use an API such as OpenRouter instead, then you will need to configure PicoClaw to connect directly to MCPFusion so that it can provide tool call services.
+> **Note on MCP with ClawEh:** When ClawEh uses a CLI backend like Claude Code, it is unable to pass MCP tool definitions in their native structured form. As a workaround, ClawEh passes MCP tool definitions as text. For this reason, when using ClawEh with a CLI such as Claude Code, Codex, or Gemini CLI, it is much more efficient to configure the CLI(s) to connect to MCPFusion directly (as done in Part 1 above) rather than configuring ClawEh to use MCPFusion directly. If you choose to use an API such as OpenRouter instead, then you will need to configure ClawEh to connect directly to MCPFusion so that it can provide tool call services.
 
-### 3.6 Install the systemd Service
+### 3.7 Install the systemd Service
 
-Create a service file:
+Copy the service file from the repository and install it:
 
 ```bash
-sudo vi /etc/systemd/system/picoclaw.service
+sudo cp ~/source/ClawEh/claw.service /etc/systemd/system/claw.service
+sudo vi /etc/systemd/system/claw.service
 ```
 
-Paste the following, replacing `<USER>` with your Linux username:
+Replace `YOUR_USERNAME` with your Linux username (two occurrences). The file should look like this:
 
 ```ini
 [Unit]
-Description=PicoClaw AI Gateway
-After=network.target
+Description=Claw AI Agent
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=simple
 User=<USER>
-WorkingDirectory=/home/<USER>
-ExecStart=/home/<USER>/.local/bin/picoclaw gateway
-Restart=always
+ExecStart=/home/<USER>/.local/bin/claw gateway
+Restart=on-failure
 RestartSec=5
-
-StandardOutput=journal
-StandardError=journal
-SyslogIdentifier=picoclaw
+KillMode=control-group
+TimeoutStopSec=30
+Environment=PATH=/home/<USER>/.local/bin:/usr/local/bin:/usr/bin:/bin
 
 [Install]
 WantedBy=multi-user.target
 ```
 
+ClawEh writes its own log to `~/.claw/logs/claw.log` — no output redirection is needed in the service file.
+
 Enable and start the service:
 
 ```bash
 sudo systemctl daemon-reload
-sudo systemctl enable picoclaw
-sudo systemctl start picoclaw
-sudo systemctl status picoclaw
+sudo systemctl enable claw
+sudo systemctl start claw
+sudo systemctl status claw
 ```
 
-### 3.7 Test the Bot
+### 3.8 Test the Bot
 
-Open Telegram, find your bot by the username you gave it in BotFather, and send it a message. It should respond using Claude Code.
+Open Telegram, find your bot by the username you gave it in BotFather, and send it a message. It should respond using Claude Code. Because you configured unified mode, Alice will remember this conversation the next time you message her, from any channel you have configured.
 
 ---
 
@@ -645,16 +679,31 @@ tail -f ~/.maestro/data/projects/my-research/log.txt
 - *No Maestro tools visible in your CLI* — ensure MCPFusion is running and that `maestro.json` has the correct binary path; check `/opt/mcpfusion/mcpfusion.log` for errors launching the stdio process
 - *Tasks not executing* — confirm that at least one LLM is configured with `"enabled": true` in `~/.maestro/config.json` and that the `command` path is correct; check `~/.maestro/maestro.log` for errors
 
-### PicoClaw
+### ClawEh
+
+ClawEh writes its log to:
+
+```
+~/.claw/logs/claw.log
+```
+
+To watch it in real time:
 
 ```bash
-sudo journalctl -u picoclaw -f
+tail -f ~/.claw/logs/claw.log
+```
+
+systemd also captures any output the service itself writes before the log is initialised:
+
+```bash
+sudo journalctl -u claw -f
 ```
 
 **Common issues:**
 
-- *Bot does not respond* — verify the Telegram token is correct and that your user ID is listed in `allow_from`
-- *Claude Code not found* — ensure the `claude` binary is in the PATH of the user running the service; you can test this by running `su -s /bin/bash <USER> -c "which claude"`
+- *Bot does not respond* — verify the Telegram token is correct and that your user ID is listed in `allow_from`; check the log for "rejected by allowlist" messages
+- *Claude Code not found* — ensure the `claude` binary is in the PATH of the user running the service; the `Environment=PATH=...` line in the service file must include the directory containing the `claude` binary; you can test this by running `su -s /bin/bash <USER> -c "which claude"`
+- *Session mode warning at startup* — if the log shows "Unrecognized session mode", the `mode` value in your `session` config block is not valid; valid values are `unified`, `per-user`, `per-platform`, and `per-account`
 
 ---
 
@@ -664,7 +713,7 @@ sudo journalctl -u picoclaw -f
 |------------|------------------------------|------------------------------|---------------------------------------------------|-----------------|
 | MCPFusion  | `/opt/mcpfusion/mcpfusion`   | `/opt/mcpfusion/env`, `/opt/mcpfusion/*.json` | `/opt/mcpfusion/mcpfusion.log` | `mcpfusion`     |
 | Maestro    | `~/bin/maestro`              | `~/.maestro/config.json`     | `~/.maestro/maestro.log`, `~/.maestro/data/projects/<name>/log.txt` | (stdio, no service needed) |
-| PicoClaw   | `~/.local/bin/picoclaw`      | `~/.picoclaw/config.json`    | `journalctl -u picoclaw`                          | `picoclaw`      |
+| ClawEh     | `~/.local/bin/claw`          | `~/.claw/config.json`        | `~/.claw/logs/claw.log`                           | `claw`          |
 
 ### Useful Commands
 
@@ -678,8 +727,8 @@ tail -f ~/.maestro/maestro.log
 # Watch a Maestro project log
 tail -f ~/.maestro/data/projects/<project-name>/log.txt
 
-# View PicoClaw logs
-sudo journalctl -u picoclaw -f
+# View ClawEh log
+tail -f ~/.claw/logs/claw.log
 
 # Restart MCPFusion after config changes
 sudo systemctl restart mcpfusion
