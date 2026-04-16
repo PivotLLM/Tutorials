@@ -503,6 +503,8 @@ If you want each person to have a private, independent relationship with the ass
 
 ### 3.6 Configure ClawEh
 
+**Note: ClawEh can be configured via it's web interface or by directly editing the configuration file. Since the web interface could re-write the config file, it's best to ensure that it is not running when editing config.json. You will also have to re-start ClawEh to pick up the new configuration.**
+
 Edit `~/.claw/config.json`. Replace its contents with the following, substituting your values where indicated:
 
 ```json
