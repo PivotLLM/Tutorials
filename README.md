@@ -4,7 +4,8 @@ This repo is intended to help you get started and assemble a basic AI environmen
 
 ## Guides
 
-- **[Getting Started](docs/getting-started.md)** — Install and configure MCPFusion, Maestro, and (optionally) ClawEh with Telegram
+- **[ClawEh Quickstart](docs/claweh-quickstart.md)** — The fast path for beginners: download a binary, run the setup wizard, and connect a Telegram bot to an OpenRouter model
+- **[Getting Started](docs/getting-started.md)** — Advanced/self-hosted guide to installing and configuring MCPFusion, Maestro, and ClawEh from source
 
 ## Our Software
 
@@ -12,7 +13,7 @@ This repo is intended to help you get started and assemble a basic AI environmen
 
 - **[Maestro](https://github.com/PivotLLM/Maestro)** is a local (stdio) MCP server that provides a methodology and suite of tools to orchestrate projects, enable repeatable processes, and promote continuous improvement. Its flexible design can be used to guide an LLM through a process, and it supports delegating series of tasks to subagents for work and quality control.
 
-- **[ClahEh](https://github.com/PivotLLM/ClawEh)** is a lightweight *Claw with a focus on security and relablity. It began life as a PicoClaw fork and is being evolved in a different direction. Please refer to the repo for details.
+- **[ClawEh](https://github.com/PivotLLM/ClawEh)** is a lightweight personal AI assistant focused on stability and security. It connects messaging channels (such as Telegram) to a model of your choice — a hosted API like OpenRouter, or a CLI agent you already have installed. The cores of MCPFusion and Maestro are built directly into ClawEh, and prebuilt Linux and macOS binaries are published on GitHub. Please refer to the repo for details.
   
 Copyright (c) 2026 by Tenebris Technologies Inc. The contents of this repository are licensed under the MIT License. Please see LICENSE for details.
 
