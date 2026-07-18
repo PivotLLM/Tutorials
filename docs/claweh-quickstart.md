@@ -19,10 +19,10 @@ continue to exist as standalone software.
 
 ## Part 1 — Choosing an LLM (start here)
 
-> **In a hurry?** If you already have API keys and know which model(s) you want to
-> use, skip to [Part 3 — Getting Started](#part-3--getting-started). If you plan to
-> use Claude Code, Codex, or Gemini CLI instead of an API, skip there too — ClawEh
-> detects those automatically.
+**In a hurry?** If you already have API keys and know which model(s) you want to
+use, skip to [Part 3 — Getting Started](#part-3--getting-started). If you plan to
+use Claude Code, Codex, or Gemini CLI instead of an API, and have at least one of them
+installed, skip there too — ClawEh detects those automatically.
 
 Your assistant is only as good (and only as expensive) as the model behind it.
 Models vary enormously in both **capability** and **cost** — from small, fast, and
