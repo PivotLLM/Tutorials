@@ -7,16 +7,13 @@ This guide is for people who are new to ClawEh. It walks you from zero to a
 working assistant using a downloaded binary and the built-in setup wizard. There
 is a second half for tuning and for more advanced setups.
 
-> **What is ClawEh?** ClawEh is a lightweight personal AI assistant that connects
-> messaging channels (like Telegram) to an AI model of your choice — either a
-> hosted API such as OpenRouter, or a command-line agent you already have
-> installed. The cores of our **Fusion** (connectivity/tooling) and **Maestro**
-> (orchestration) projects are now built directly into ClawEh, so a single binary
-> gives you the assistant plus its tooling and memory. Fusion and Maestro also
-> continue to exist as standalone software.
->
-> Use of this tutorial is permitted only if you accept the accompanying License,
-> disclaimer, and legal notices in the repository README.
+ClawEh is a lightweight personal AI assistant that connects
+messaging channels (like Telegram) to an AI model of your choice — either a
+hosted API such as OpenRouter, or a command-line agent you already have
+installed. The cores of our **Fusion** (connectivity/tooling) and **Maestro**
+(orchestration) projects are now built directly into ClawEh, so a single binary
+gives you the assistant plus its tooling and memory. Fusion and Maestro also
+continue to exist as standalone software.
 
 ---
 
