@@ -7,22 +7,25 @@ This guide is for people who are new to ClawEh. It walks you from zero to a
 working assistant using a downloaded binary and the built-in setup wizard. There
 is a second half for tuning and for more advanced setups.
 
-ClawEh is a lightweight personal AI assistant that connects
-messaging channels (like Telegram) to an AI model of your choice — either a
-hosted API such as OpenRouter, or a command-line agent you already have
-installed. The cores of our **Fusion** (connectivity/tooling) and **Maestro**
-(orchestration) projects are now built directly into ClawEh, so a single binary
-gives you the assistant plus its tooling and memory. Fusion and Maestro also
-continue to exist as standalone software.
+> **What is ClawEh?** ClawEh is a lightweight personal AI assistant that connects
+> messaging channels (like Telegram) to an AI model of your choice — either a
+> hosted API such as OpenRouter, or a command-line agent you already have
+> installed. The cores of our **Fusion** (connectivity/tooling) and **Maestro**
+> (orchestration) projects are now built directly into ClawEh, so a single binary
+> gives you the assistant plus its tooling and memory. Fusion and Maestro also
+> continue to exist as standalone software.
+>
+> Use of this tutorial is permitted only if you accept the accompanying License,
+> disclaimer, and legal notices in the repository README.
 
 ---
 
 ## Part 1 — Choosing an LLM (start here)
 
-**In a hurry?** If you already have API keys and know which model(s) you want to
-use, skip to [Part 3 — Getting Started](#part-3--getting-started). If you plan to
-use Claude Code, Codex, or Gemini CLI instead of an API, and have at least one of them
-installed, skip there too — ClawEh detects those automatically.
+> **In a hurry?** If you already have API keys and know which model(s) you want to
+> use, skip to [Part 3 — Getting Started](#part-3--getting-started). If you plan to
+> use Claude Code, Codex, or Gemini CLI instead of an API, skip there too — ClawEh
+> detects those automatically.
 
 Your assistant is only as good (and only as expensive) as the model behind it.
 Models vary enormously in both **capability** and **cost** — from small, fast, and
