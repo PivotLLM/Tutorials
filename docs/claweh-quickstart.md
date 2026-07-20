@@ -88,12 +88,38 @@ If you're using a hosted model (recommended for beginners):
 > You can skip this section entirely if you'd rather use a CLI agent — see the
 > note in 3.3.
 
-### 3.2 Download the binary
+### 3.2 Install ClawEh
 
 We publish ready-to-run **Linux and macOS** binaries on GitHub. There is nothing to
-compile.
+compile. Choose whichever method you prefer.
 
-Go to the **Releases** page:
+#### Option A — one-line installer (recommended)
+
+On Linux or macOS (Intel or Apple Silicon):
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/PivotLLM/ClawEh/main/claweh.sh | sh
+```
+
+This detects your system, downloads the matching binary, installs it to
+`/usr/local/bin` (falling back to `~/.local/bin`), and places the license and
+third-party notices alongside it. It installs **only the `claw` binary** — it
+never touches your data or configuration, so it is safe to re-run to upgrade.
+
+When it finishes, `claw` is on your `PATH`, so you can run it from anywhere.
+
+> **Just trying it out?** Install into a throwaway directory so nothing else is
+> touched:
+>
+> ```bash
+> CLAWEH_INSTALL_DIR="$HOME/claw-test/bin" \
+>   sh -c "$(curl -fsSL https://raw.githubusercontent.com/PivotLLM/ClawEh/main/claweh.sh)"
+> ```
+
+#### Option B — download the binary manually
+
+Prefer to pick the file yourself, or need a platform the installer doesn't cover
+(for example 32-bit Linux)? Go to the **Releases** page:
 
 **https://github.com/PivotLLM/ClawEh/releases**
 
@@ -115,15 +141,22 @@ mv claw-linux-amd64 claw
 ```
 
 On macOS, substitute the matching asset (`claw-darwin-arm64` for Apple Silicon,
-`claw-darwin-amd64` for Intel). If macOS blocks the first launch, allow it under
-**System Settings → Privacy & Security**.
+`claw-darwin-amd64` for Intel).
+
+> **`claw` vs `./claw`:** if you used **Option A**, `claw` is on your `PATH`, so
+> run `claw` from anywhere. If you used **Option B**, run `./claw` from the
+> directory that holds the file. The rest of this guide writes `./claw`; drop the
+> `./` if you used the installer.
 
 ### 3.3 Start ClawEh and open the setup wizard
 
-You can run ClawEh directly to try it out:
+You can run ClawEh directly to try it out. If you used the installer (Option A),
+just run `claw`; if you downloaded manually (Option B), run `./claw` from the
+download directory:
 
 ```bash
-./claw
+claw        # installer (Option A)
+# ./claw    # manual download (Option B)
 ```
 
 This starts the assistant along with its **web UI** on port **18790**. Open a
@@ -279,8 +312,6 @@ can share the same context.
 - **API key rejected:** Re-check the key in the **Providers** page and use the
   **Test** button. For OpenRouter, confirm your account has credit and that any
   spending limit hasn't been hit.
-- **macOS won't run the binary:** Approve it under **System Settings → Privacy &
-  Security** after the first blocked launch.
 
 ---
 
