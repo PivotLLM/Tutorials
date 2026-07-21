@@ -4,7 +4,7 @@ This repo is intended to help you get started and assemble a basic AI environmen
 
 ## Guides
 
-- **[ClawEh Quickstart](docs/claweh-quickstart.md)** — The fast path for beginners: download a binary, run the setup wizard, and connect a Telegram bot to an OpenRouter model
+- **[ClawEh Quickstart](docs/claweh-quickstart.md)** — The fast path to a working AI assistant: download a binary, run the setup wizard, connect to OpenRouter, and chat with your assistant via Telegram.
 
 ## Our Software
 
