@@ -7,16 +7,16 @@ This guide is for people who are new to ClawEh. It walks you from zero to a
 working assistant using a downloaded binary and the built-in setup wizard. There
 is a second half for tuning and for more advanced setups.
 
-> **What is ClawEh?** ClawEh is a lightweight personal AI assistant that connects
-> messaging channels (like Telegram) to an AI model of your choice — either a
-> hosted API such as OpenRouter, or a command-line agent you already have
-> installed. The cores of our **Fusion** (connectivity/tooling) and **Maestro**
-> (orchestration) projects are now built directly into ClawEh, so a single binary
-> gives you the assistant plus its tooling and memory. Fusion and Maestro also
-> continue to exist as standalone software.
->
-> Use of this tutorial is permitted only if you accept the accompanying License,
-> disclaimer, and legal notices in the repository README.
+**What is ClawEh?** ClawEh is a lightweight personal AI assistant that connects
+messaging channels (like Telegram) to an AI model of your choice — either a
+hosted API such as OpenRouter, or a command-line agent you already have
+installed. The cores of our **Fusion** (connectivity/tooling) and **Maestro**
+(orchestration) projects are now built directly into ClawEh, so a single binary
+gives you the assistant plus its tooling and memory. Fusion and Maestro also
+continue to exist as standalone software.
+
+Use of this tutorial is permitted only if you accept the accompanying License,
+disclaimer, and legal notices in the repository README.
 
 ---
 
@@ -30,8 +30,8 @@ is a second half for tuning and for more advanced setups.
 Your assistant is only as good (and only as expensive) as the model behind it.
 Models vary enormously in both **capability** and **cost** — from small, fast, and
 nearly free, up to large frontier models that cost real money per message. For a
-first assistant you do **not** need a frontier model. A capable, inexpensive model
-is the right starting point; you can always change it later in one click.
+general purpose assistant you do **not** need a frontier model. A capable, inexpensive model
+is the right starting point. You can always change it later in one click.
 
 **We recommend starting with DeepSeek V4 Flash, served through OpenRouter.** It is
 fast, inexpensive, and more than good enough for everyday assistant tasks. In the
@@ -44,21 +44,38 @@ setup wizard it is tagged **Recommended**.
 
 Both sit at a similar low price point and are available through a single
 OpenRouter account, so you can switch between them without signing up for anything
-new. If you outgrow them, OpenRouter also offers larger models (for example
-DeepSeek V4 Pro) that you can select later.
+new. If you outgrow them, OpenRouter offers hundreds of models, including the latest
+from Anthropic and OpenAI.
 
-> **Why OpenRouter?** One account and one API key give you access to models from
-> many providers, with a single balance and spending limit you control. That makes
-> it ideal for a first assistant.
+**Why OpenRouter?** One account and one API key gives you access to a vast range
+of models. Your account is pre-paid,and you can optionally set a daily spending limit
+to avoid nasty surprises. OpenRouter also offers helpful privacy controls. For example,
+you can configure your account to only use LLM providers with zero data retention policies.
+
+To set up an account (highly recommended for beginners):
+
+1. Go to **https://openrouter.ai** and create an account.
+2. Add a **small amount** of credit to start — around **$20** is plenty to try
+   things out.
+3. **Set a spending limit.** In your OpenRouter account settings you can cap how
+   much can be spent, and you can attach a limit to the API key you create. Setting
+   a small **daily budget** protects you from surprises while you learn.
+4. Create an **API key** and copy it. You'll paste it into the wizard.
+
+Note that if you have a CLI agent (Claude Code, Codex, or Gemini CLI) already installed,
+Claw can use that. However, they are intended for agentic work and your chat with
+them will be slower.
 
 ---
 
 ## Part 2 — Create a Telegram bot (optional)
 
-The nicest way to use ClawEh is to message it on Telegram from your phone or
-desktop. This step is optional — you can also chat with your assistant in the
-built-in web UI — but if you want Telegram, set up the bot **now** so you have the
-token ready when you reach the wizard.
+One of the nicest way to use ClawEh is to message it on Telegram from your phone or
+desktop. (Our other favourite is Slack.)
+
+This step is optional — you can also chat with your assistant in the built-in web UI,
+but if you want Telegram, it will be easier if you set up the bot **now** so you have the
+token ready when you reach the ClawEh configuration wizard.
 
 1. Open Telegram and search for **@BotFather**.
 2. Send `/newbot` and follow the prompts (choose a name and a username).
@@ -69,54 +86,45 @@ token ready when you reach the wizard.
 
 That's it — hold on to the token and your user ID for Part 3.
 
+**NOTE:** By design, ClawEh refuses to accept messages from external users who are
+not explicity authorized in the configuration. This avoids you accidentally giving
+every Telegram user in the world access to your assistant. If your messages are
+being ignored, please check the ClawEh log.
+
 ---
 
 ## Part 3 — Getting Started
 
-### 3.1 Create an OpenRouter account (with a budget)
+### 3.1 Install ClawEh
 
-If you're using a hosted model (recommended for beginners):
+We publish ready-to-run **Linux and macOS** binaries on GitHub, or you can compile
+it yourself. Whatever makes you happy.
 
-1. Go to **https://openrouter.ai** and create an account.
-2. Add a **small amount** of credit to start — around **$5–$10** is plenty to try
-   things out.
-3. **Set a spending limit.** In your OpenRouter account settings you can cap how
-   much can be spent, and you can attach a limit to the API key you create. Setting
-   a small **daily budget** protects you from surprises while you learn.
-4. Create an **API key** and copy it. You'll paste it into the wizard.
+#### Option A — One-line installer (recommended)
 
-> You can skip this section entirely if you'd rather use a CLI agent — see the
-> note in 3.3.
-
-### 3.2 Install ClawEh
-
-We publish ready-to-run **Linux and macOS** binaries on GitHub. There is nothing to
-compile. Choose whichever method you prefer.
-
-#### Option A — one-line installer (recommended)
-
-On Linux or macOS (Intel or Apple Silicon):
+On Linux or macOS:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/PivotLLM/ClawEh/main/claweh.sh | sh
 ```
 
-This detects your system, downloads the matching binary, installs it to
+This detects your system, downloads the appropriate binary, installs it to
 `/usr/local/bin` (falling back to `~/.local/bin`), and places the license and
 third-party notices alongside it. It installs **only the `claw` binary** — it
 never touches your data or configuration, so it is safe to re-run to upgrade.
 
-When it finishes, `claw` is on your `PATH`, so you can run it from anywhere.
+When it finishes, `claw` is on your `PATH`, so you can run it from anywhere. You may
+need to restart your terminal or console session to pick up the new path.
 
-> **Just trying it out?** Install into a throwaway directory so nothing else is
-> touched:
->
-> ```bash
-> CLAWEH_INSTALL_DIR="$HOME/claw-test/bin" \
->   sh -c "$(curl -fsSL https://raw.githubusercontent.com/PivotLLM/ClawEh/main/claweh.sh)"
-> ```
+**Just trying it out?** If you wish, you can also install the binary in an
+alternate location:
 
-#### Option B — download the binary manually
+```bash
+CLAWEH_INSTALL_DIR="$HOME/claw-test/bin" \
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/PivotLLM/ClawEh/main/claweh.sh)"
+```
+
+#### Option B — Download the binary manually
 
 Prefer to pick the file yourself, or need a platform the installer doesn't cover
 (for example 32-bit Linux)? Go to the **Releases** page:
@@ -148,7 +156,7 @@ On macOS, substitute the matching asset (`claw-darwin-arm64` for Apple Silicon,
 > directory that holds the file. The rest of this guide writes `./claw`; drop the
 > `./` if you used the installer.
 
-### 3.3 Start ClawEh and open the setup wizard
+### 3.2 Start ClawEh and open the setup wizard
 
 You can run ClawEh directly to try it out. If you used the installer (Option A),
 just run `claw`; if you downloaded manually (Option B), run `./claw` from the
@@ -183,7 +191,15 @@ you through a handful of steps:
 
 Your assistant is now live. You can chat with it right there in the web UI.
 
-### 3.4 Connect Telegram
+***Note:*** If you are installing on a headless system, **and you understand
+the security implications**, you can have the application listen on the local network
+using an environment variable:
+
+```
+CLAW_GATEWAY_HOST=0.0.0.0 claw
+```
+
+### 3.3 Connect Telegram
 
 If you created a bot in Part 2, connect it through the web UI:
 
