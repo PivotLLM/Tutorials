@@ -41,6 +41,9 @@ setup wizard it is tagged **Recommended**.
 |---|---|---|
 | **Recommended** | DeepSeek V4 Flash | `deepseek/deepseek-v4-flash` |
 | **Alternative** | Gemini 3.1 Flash Lite | `google/gemini-3.1-flash-lite-preview` |
+| **Alternative** | GLM | `z-ai/glm-5.2` *|
+
+* For GLM, we recommend using the `OpenAI Responses` provider.
 
 Both sit at a similar low price point and are available through a single
 OpenRouter account, so you can switch between them without signing up for anything
