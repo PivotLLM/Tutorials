@@ -213,7 +213,7 @@ If you created a bot in Part 2, connect it through the web UI:
 Now open Telegram, find your bot, and send it a message. It should reply using the
 model you chose.
 
-### 3.5 Install as a background service (Linux)
+### 3.4 Install as a background service (Linux)
 
 Once you're happy with it, install ClawEh so it starts automatically at boot. On
 **Linux (systemd)**:
@@ -247,12 +247,12 @@ common adjustments and points advanced users toward deeper capabilities.
 
 ### Where your settings live
 
-ClawEh stores its configuration at **`~/.claw/config.json`**. The setup wizard and
-the web UI write to this file for you, so you rarely need to edit it by hand. If
-you relocate it, set the `CLAW_HOME` environment variable to the new directory.
+By default, ClawEh stores its configuration at **`~/.claw/config.json`**. 
+The setup wizard and the web UI write to this file for you, so you rarely
+need to edit it by hand. If you relocate it, set the `CLAW_HOME` environment variable to the new directory.
 
-Most things you'll want to change — providers, models, agents, and channels — are
-editable directly in the web UI, which is the recommended way to make changes.
+Most things you'll want to change — providers, models, agents, and channels — can be configured
+in the web UI, which is the recommended way to make changes.
 
 ### Changing or adding models
 
@@ -270,10 +270,13 @@ claw model "OpenRouter DeepSeek V4 Flash"
 Start cheap, and only move up to a larger model if a task needs it. Mixing is fine:
 you might run a small model day-to-day and keep a stronger one available.
 
+Note that if you assign more than one model to an agent, you can switch models in
+chat using the `/model` command.
+
 ### Exposing the web UI beyond localhost
 
-If you want to reach the web UI from another machine on your network, install with
-an explicit bind address and, if needed, an allowlist:
+If you want to reach the web UI from another machine on your network, **and understand
+the security implications** install with an explicit bind address and, if needed, an allowlist:
 
 ```bash
 ./claw install --host 0.0.0.0 --allowed-cidrs 192.168.1.0/24
@@ -281,6 +284,9 @@ an explicit bind address and, if needed, an allowlist:
 
 Loopback is always allowed. Be deliberate about who can reach the UI — anyone who
 can, can talk to your assistant.
+
+We are considering the best way to address this and are interested in any feedback
+you have to offer.
 
 ### Using a CLI agent instead of an API
 
@@ -309,11 +315,14 @@ the ClawEh repository documentation to go further:
 
 ### Multiple users and memory scope
 
-By default a single shared assistant serves you across channels. ClawEh also
-supports per-user and per-platform memory scopes for multi-user setups. If you plan
+By default, a single shared assistant serves you across channels. The default unified
+mode means that each assistant acts in the same context across channels. This most
+closely resembles how a human assistant works.
+
+ClawEh also supports per-user and per-platform scopes for multi-user setups. If you plan
 to give several people access, review the session/scope and `allow_from` guidance
-in the ClawEh README before opening it up — in a shared setup, everyone allowed in
-can share the same context.
+in the ClawEh README before opening it up. You will also need to pay particular attention
+to any file paths and MCP tools that assistants can access.
 
 ---
 
@@ -335,3 +344,5 @@ Copyright (c) 2026 Tenebris Technologies Inc. Provided for general educational
 purposes under the terms in the repository README. It is up to you to ensure your
 use of the software is consistent with your security requirements and risk
 tolerance.
+
+Made in Canada with domestic and international components.
