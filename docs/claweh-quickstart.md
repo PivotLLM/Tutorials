@@ -348,4 +348,6 @@ purposes under the terms in the repository README. It is up to you to ensure you
 use of the software is consistent with your security requirements and risk
 tolerance.
 
+We have no business relationship with OpenRouter other than as a happy customer.
+
 Made in Canada with domestic and international components.
